@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Header } from "../../components/Header";
 import { Summary } from "../../components/Summary";
 import { SearchForm } from "./components/SearchForm";
-import { PriceHighLight, TransactionsTable, TransactionContainer } from "./styles";
+import { TransactionsTable, PriceHighlight, TransactionsContainer } from "./styles";
 import { TransactionsContext } from "../../contexts/TransacationsContext";
 import { dateFormatter, priceFormatter } from "../../utils/formatter";
 
@@ -19,19 +19,20 @@ export function Transactions() {
       <Summary />
 
 
-      <TransactionContainer>
+      <TransactionsContainer>
         <SearchForm />
+
         <TransactionsTable>
           <tbody>
-            {transactions.map((transaction) => {
+            {transactions.map(transaction => {
               return (
                 <tr key={transaction.id}>
-                  <td width='50%'>{transaction.description}</td>
+                  <td width="50%">{transaction.description}</td>
                   <td>
-                    <PriceHighLight variant={transaction.type}>
+                    <PriceHighlight variant={transaction.type}>
                       {transaction.type === 'outcome' && '- '}
                       {priceFormatter.format(transaction.price)}
-                    </PriceHighLight>
+                    </PriceHighlight>
                   </td>
                   <td>{transaction.category}</td>
                   <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
@@ -40,7 +41,7 @@ export function Transactions() {
             })}
           </tbody>
         </TransactionsTable>
-      </TransactionContainer>
+      </TransactionsContainer>
     </div>
   )
 }
