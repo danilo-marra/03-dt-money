@@ -1,23 +1,19 @@
 import { useContext } from "react";
 import { Header } from "../../components/Header";
 import { Summary } from "../../components/Summary";
-import { SearchForm } from "./components/SearchForm";
-import { TransactionsTable, PriceHighlight, TransactionsContainer } from "./styles";
-import { TransactionsContext } from "../../contexts/TransacationsContext";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { dateFormatter, priceFormatter } from "../../utils/formatter";
+import { SearchForm } from "./components/SearchForm";
 
-
-
+import { PriceHighlight, TransactionsContainer, TransactionsTable } from "./styles";
 
 export function Transactions() {
-
   const { transactions } = useContext(TransactionsContext)
 
   return (
     <div>
       <Header />
       <Summary />
-
 
       <TransactionsContainer>
         <SearchForm />
@@ -43,5 +39,5 @@ export function Transactions() {
         </TransactionsTable>
       </TransactionsContainer>
     </div>
-  )
+  );
 }

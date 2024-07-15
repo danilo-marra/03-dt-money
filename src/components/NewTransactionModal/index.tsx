@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
-import { ArrowCircleDown, ArrowCircleUp, X } from '@phosphor-icons/react';
+import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
 import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -23,6 +23,9 @@ export function NewTransactionModal() {
     formState: { isSubmitting }
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionFormSchema),
+    defaultValues: {
+      type: 'income'
+    }
   })
 
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
@@ -42,7 +45,6 @@ export function NewTransactionModal() {
           <X size={24} />
         </CloseButton>
 
-        {/* Forma uncontrolled */}
         <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
           <input
             type="text"
@@ -63,20 +65,20 @@ export function NewTransactionModal() {
             {...register('category')}
           />
 
-          {/* Para controlar que não é nativo do HTML usando o react hook form é necessário passar de forma controlada */}
-
           <Controller
             control={control}
             name="type"
             render={({ field }) => {
-              console.log(field.value)
               return (
-                <TransactionType onValueChange={field.onChange}>
-                  <TransactionTypeButton variant="income" value={field.value}>
+                <TransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <TransactionTypeButton variant="income" value="income">
                     <ArrowCircleUp size={24} />
                     Entrada
                   </TransactionTypeButton>
-                  <TransactionTypeButton variant="outcome" value={field.value}>
+                  <TransactionTypeButton variant="outcome" value="outcome">
                     <ArrowCircleDown size={24} />
                     Saída
                   </TransactionTypeButton>
@@ -84,8 +86,6 @@ export function NewTransactionModal() {
               )
             }}
           />
-
-
 
           <button type="submit" disabled={isSubmitting}>
             Cadastrar
